@@ -25,13 +25,12 @@ spring:
           # URL du serveur OpenID Connect (ex: Keycloak). A adapter via la variable d'environnement.
           issuer-uri: ${OIDC_ISSUER_URI:http://localhost:8180/realms/michelin}
 
-# Stockage S3 : les identifiants sont lus dans les variables d'environnement
-# pour ne pas les committer sur GitHub.
+# Stockage S3 (identifiants donnés dans l'énoncé)
 storage:
   s3:
     url: ${S3_URL:https://s3.bober.ovh}
-    access-key-id: ${S3_ACCESS_KEY_ID:non-configure}
-    secret-access-key: ${S3_SECRET_ACCESS_KEY:non-configure}
+    access-key-id: ${S3_ACCESS_KEY_ID:cqBlF80IVJrc1isWW6oK}
+    secret-access-key: ${S3_SECRET_ACCESS_KEY:KPJlY826Qi0d952w4GWmQIvA0zfvWi62hvIyiZlT}
     bucket-restaurant: restaurant
     bucket-evaluation: evaluation
 
