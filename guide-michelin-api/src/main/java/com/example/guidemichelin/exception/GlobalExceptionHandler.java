@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.stream.Collectors;
 
-/** Transforme les exceptions en réponses JSON {code, message}. */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

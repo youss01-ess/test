@@ -13,7 +13,6 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI openAPI() {
-        // Permet de coller un token JWT dans le bouton "Authorize" de Swagger UI
         return new OpenAPI()
                 .info(new Info().title("API Guide Michelin").version("0.0.1")
                         .description("Gestion des restaurants et de leurs évaluations"))

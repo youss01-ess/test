@@ -12,22 +12,18 @@ public class Evaluation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Nom affiché de l'évaluateur (récupéré dans le JWT)
     @Column(nullable = false, length = 50)
     private String evaluateur;
 
-    // Identifiant ("sub") de l'utilisateur dans le JWT : sert à savoir à qui appartient l'évaluation
     @Column(nullable = false)
     private String auteurId;
 
     @Column(nullable = false, length = 255)
     private String commentaire;
 
-    // Nombre d'étoiles : 0, 1, 2 ou 3
     @Column(nullable = false)
     private int note;
 
-    // URLs des photos des plats (stockées sur S3)
     @ElementCollection
     private List<String> photos = new ArrayList<>();
 

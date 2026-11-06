@@ -2,7 +2,6 @@ package com.example.guidemichelin.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/** Propriétés "storage.s3.*" du application.yml */
 @ConfigurationProperties(prefix = "storage.s3")
 public class StorageProperties {
 

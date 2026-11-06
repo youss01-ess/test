@@ -30,7 +30,6 @@ public class EvaluationController {
         return evaluationService.search(motsCles);
     }
 
-    // Attention : cette route doit rester distincte de /{id}
     @GetMapping("/mes-evaluations")
     @Operation(summary = "Récupère les évaluations créées par l'utilisateur connecté")
     public List<EvaluationResponse> mine(JwtAuthenticationToken auth) {

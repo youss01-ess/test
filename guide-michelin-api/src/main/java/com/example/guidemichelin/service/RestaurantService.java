@@ -40,7 +40,6 @@ public class RestaurantService {
         return toResponse(restaurantRepository.save(restaurant));
     }
 
-    // On ne peut modifier que le nom et l'adresse
     public RestaurantResponse update(Long id, RestaurantRequest request) {
         Restaurant restaurant = getRestaurant(id);
         restaurant.setNom(request.nom());
@@ -59,7 +58,6 @@ public class RestaurantService {
                 .orElseThrow(() -> new NotFoundException("Restaurant " + id + " introuvable"));
     }
 
-    // ---- Conversions entité -> DTO ----
 
     static RestaurantResponse toResponse(Restaurant r) {
         List<EvaluationResponse> evaluations = r.getEvaluations().stream()
@@ -74,7 +72,7 @@ public class RestaurantService {
                 e.getCommentaire(), e.getNote(), e.getPhotos());
     }
 
-    /** Moyenne des notes, ou -1 s'il n'y a aucune évaluation. */
+    // -1 si pas d'évaluation (voir énoncé)
     static double calculerMoyenne(List<Evaluation> evaluations) {
         if (evaluations == null || evaluations.isEmpty()) {
             return -1;

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 
-    // Evaluations dont le commentaire contient le mot clef (sans tenir compte de la casse)
     List<Evaluation> findByCommentaireContainingIgnoreCase(String motCle);
 
     List<Evaluation> findByAuteurId(String auteurId);

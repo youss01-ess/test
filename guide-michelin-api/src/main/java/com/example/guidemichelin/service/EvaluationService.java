@@ -63,10 +63,6 @@ public class EvaluationService {
         return RestaurantService.toResponse(evaluationRepository.save(evaluation));
     }
 
-    /**
-     * Cherche les évaluations dont le commentaire contient au moins un des mots clefs.
-     * Sans mot clef, on renvoie tout.
-     */
     @Transactional(readOnly = true)
     public List<EvaluationResponse> search(List<String> motsCles) {
         if (motsCles == null || motsCles.isEmpty()) {

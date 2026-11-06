@@ -26,23 +26,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // API stateless avec JWT : pas besoin de CSRF
                 .authorizeHttpRequests(auth -> auth
                         // Swagger et console H2 accessibles sans token
-                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
-                        // Seuls les admins créent / modifient les restaurants
-                        .requestMatchers(HttpMethod.POST, "/restaurants", "/restaurants/*/image").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/restaurants/*").hasRole("ADMIN")
-                        // Le reste : utilisateur connecté avec le rôle USER ou ADMIN
-                        // (la règle "on ne supprime que ses évaluations" est vérifiée dans le service)
-                        .anyRequest().hasAnyRole("USER", "ADMIN"))
-                .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
-                .headers(h -> h.frameOptions(f -> f.sameOrigin())) // pour la console H2
-                .cors(Customizer.withDefaults());
-        return http.build();
-    }
-
-    /**
-     * Transforme les rôles contenus dans le JWT en "authorities" Spring (ROLE_USER, ROLE_ADMIN).
-     */
-    @Bean
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui    @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
         converter.setJwtGrantedAuthoritiesConverter(SecurityConfig::extractAuthorities);

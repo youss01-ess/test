@@ -10,7 +10,6 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import java.io.IOException;
 import java.util.UUID;
 
-/** Envoie les images sur le serveur S3 et renvoie leur URL. */
 @Service
 public class StorageService {
 
@@ -35,7 +34,6 @@ public class StorageService {
         if (contentType == null || !contentType.startsWith("image/")) {
             throw new IllegalArgumentException("Le fichier doit être une image");
         }
-        // UUID pour éviter d'écraser un fichier qui a le même nom
         String key = UUID.randomUUID() + "-" + file.getOriginalFilename();
         try {
             s3Client.putObject(

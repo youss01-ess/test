@@ -18,7 +18,6 @@ public class Restaurant {
     @Column(nullable = false, length = 255)
     private String adresse;
 
-    // URL de l'image stockée sur S3 (peut être null tant qu'aucune image n'a été envoyée)
     private String imageUrl;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
