@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: guide-michelin-api
+  datasource:
+    # Base en mémoire (H2) comme vu en cours : les données sont perdues à l'arrêt
+    url: jdbc:h2:mem:michelin
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 20MB
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # URL du serveur OpenID Connect (ex: Keycloak). A adapter via la variable d'environnement.
+          issuer-uri: ${OIDC_ISSUER_URI:http://localhost:8180/realms/michelin}
+
+# Stockage S3 : les identifiants sont lus dans les variables d'environnement
+# pour ne pas les committer sur GitHub.
+storage:
+  s3:
+    url: ${S3_URL:https://s3.bober.ovh}
+    access-key-id: ${S3_ACCESS_KEY_ID:non-configure}
+    secret-access-key: ${S3_SECRET_ACCESS_KEY:non-configure}
+    bucket-restaurant: restaurant
+    bucket-evaluation: evaluation
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
