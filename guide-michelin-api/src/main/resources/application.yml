@@ -22,8 +22,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          # URL du serveur OpenID Connect (ex: Keycloak). A adapter via la variable d'environnement.
-          issuer-uri: ${OIDC_ISSUER_URI:http://localhost:8180/realms/michelin}
+          # Keycloak du cours (realm master, à adapter si le prof a créé un autre realm)
+          issuer-uri: ${OIDC_ISSUER_URI:https://keycloak.bober.ovh/realms/master}
 
 # Stockage S3 (identifiants donnés dans l'énoncé)
 storage:
