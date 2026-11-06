@@ -1,37 +1,34 @@
-# Guide Michelin - API
+# Guide Michelin API
 
-API Spring Boot (Java 17) pour les restaurants et leurs évaluations.
+API Spring Boot (Java 17, Maven) pour gérer des restaurants et leurs évaluations.
 
 ## Lancer
 ```
 mvn test
 mvn spring-boot:run
 ```
-Les clés S3 de l'énoncé et l'URL du Keycloak (`https://keycloak.bober.ovh/realms/master`, comme en cours)
-sont déjà dans `application.yml`. Si le realm est différent, changer `issuer-uri`
-ou définir la variable d'environnement `OIDC_ISSUER_URI`.
+L'API tourne sur http://localhost:8080 et Swagger sur http://localhost:8080/swagger-ui.html.
+La base est H2 en mémoire, donc tout est effacé quand on arrête.
 
-### Récupérer un token (Postman ou curl)
-Client id : `coursm2` (le même qu'en cours). Exemple avec le flux « password », s'il est activé sur le client :
-```
-curl -X POST https://keycloak.bober.ovh/realms/master/protocol/openid-connect/token \
-  -d grant_type=password -d client_id=coursm2 \
-  -d username=noel.flantier@michelin.fr -d password=cestbeaulhiver
-```
-Le champ `access_token` de la réponse se colle dans le bouton Authorize de Swagger.
+## Config
+Tout est dans `src/main/resources/application.yml` :
+- Keycloak du cours (`keycloak.bober.ovh`, realm `master`)
+- S3 avec les clés données dans l'énoncé
 
-Swagger : http://localhost:8080/swagger-ui.html (bouton Authorize pour coller le token)
+Pour tester il faut un token (client `coursm2`), à coller dans "Authorize" sur Swagger.
 
 ## Routes
-- `GET /restaurants`, `GET /restaurants/{id}` (avec `moyenne`, -1 si pas d'évaluation)
-- `POST /restaurants`, `PUT /restaurants/{id}`, `POST /restaurants/{id}/image` : ADMIN
-- `POST /restaurants/{id}/evaluations`
-- `GET /evaluations?motsCles=...`, `GET /evaluations/mes-evaluations`
-- `DELETE /evaluations/{id}` (la sienne, ou toutes si ADMIN)
-- `POST /evaluations/{id}/photos`
+- `GET /restaurants` et `GET /restaurants/{id}` : avec la `moyenne` (-1 si aucune évaluation)
+- `POST /restaurants`, `PUT /restaurants/{id}`, `POST /restaurants/{id}/image` : ADMIN seulement
+- `POST /restaurants/{id}/evaluations` : ajouter une évaluation
+- `GET /evaluations?motsCles=a&motsCles=b` : recherche dans les commentaires
+- `GET /evaluations/mes-evaluations` : les évaluations de l'utilisateur connecté
+- `DELETE /evaluations/{id}` : la sienne, ou n'importe laquelle si ADMIN
+- `POST /evaluations/{id}/photos` : photos des plats
 
-## Pas fait / à améliorer
-- pas testé avec le vrai Keycloak (j'ai supposé que les rôles sont dans `realm_access.roles`)
-- tests seulement sur les services
-- pas de modification d'une évaluation
-- les photos ne sont pas supprimées de S3
+## Ce qui manque
+- Je n'ai pas pu tester avec le vrai Keycloak. Je lis les rôles dans `realm_access.roles`, à vérifier.
+- Pas de modification d'une évaluation.
+- Les photos ne sont pas supprimées de S3 quand on supprime une évaluation.
+- Les erreurs 401 et 403 n'ont pas le format `{code, message}`.
+- Tests seulement sur les services.
